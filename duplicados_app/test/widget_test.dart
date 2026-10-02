@@ -10,8 +10,9 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   testWidgets('App smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
+    // Build our app and allow the splash screen to complete.
     await tester.pumpWidget(const DuplicadosApp());
+    await tester.pump(const Duration(seconds: 2));
 
     // Verify that the app title is present.
     expect(find.text('Duplicados Photo & Video'), findsOneWidget);
