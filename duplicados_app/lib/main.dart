@@ -74,10 +74,10 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: Image.asset(
                   'assets/icon/app_icon.png',
                   fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) => Icon(
-                Icons.filter_alt,
+                  errorBuilder: (context, error, stackTrace) => Icon(
+                    Icons.filter_alt,
                     size: 64,
-                color: const Color(0xFF6C5CE7),
+                    color: const Color(0xFF6C5CE7),
                   ),
                 ),
               ),
@@ -131,11 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Icon(
-                Icons.cloud_sync,
-                size: 72,
-                color: Color(0xFF6C5CE7),
-              ),
+              const Icon(Icons.cloud_sync, size: 72, color: Color(0xFF6C5CE7)),
               const SizedBox(height: 16),
               const Text(
                 'Duplicados Photo & Video',
@@ -171,8 +167,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text('Continue with Phone',
-                    style: TextStyle(fontSize: 16)),
+                child: const Text(
+                  'Continue with Phone',
+                  style: TextStyle(fontSize: 16),
+                ),
               ),
               const SizedBox(height: 20),
               const Row(
@@ -180,8 +178,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   Expanded(child: Divider(color: Colors.grey)),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Text('OR CLOUD CONNECT',
-                        style: TextStyle(color: Colors.grey, fontSize: 11)),
+                    child: Text(
+                      'OR CLOUD CONNECT',
+                      style: TextStyle(color: Colors.grey, fontSize: 11),
+                    ),
                   ),
                   Expanded(child: Divider(color: Colors.grey)),
                 ],
@@ -343,10 +343,12 @@ class _HomeScreenState extends State<HomeScreen> {
         _googleSignInInitialized = true;
       }
 
-      final GoogleSignInAccount account =
-          await GoogleSignIn.instance.authenticate(
-        scopeHint: ['https://www.googleapis.com/auth/photoslibrary.readonly'],
-      );
+      final GoogleSignInAccount account = await GoogleSignIn.instance
+          .authenticate(
+            scopeHint: [
+              'https://www.googleapis.com/auth/photoslibrary.readonly',
+            ],
+          );
 
       _showSnackBar('Cloud Engine Connected: ${account.email}');
       _loadCloudMockDuplicates('Google Photos');
@@ -378,12 +380,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _processMetadataOnly(
-      List<PlatformFile> files, String source) async {
+    List<PlatformFile> files,
+    String source,
+  ) async {
     final Map<String, List<MediaFile>> map = {};
 
     for (final file in files) {
-      final String baseName =
-          file.name.split('.').first.replaceAll('_copy', '');
+      final String baseName = file.name
+          .split('.')
+          .first
+          .replaceAll('_copy', '');
       final int sizeBytes = file.lengthSync() ?? 0;
       final MediaFile media = MediaFile(
         id: file.name + DateTime.now().millisecondsSinceEpoch.toString(),
@@ -526,7 +532,8 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     _showSnackBar(
-        'Cloud Engine Purged $removedCount selected duplicate files.');
+      'Cloud Engine Purged $removedCount selected duplicate files.',
+    );
   }
 
   void _openSideBySideComparison(DuplicateGroup group) {
@@ -536,8 +543,10 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, setDialogState) {
           return AlertDialog(
             backgroundColor: const Color(0xFF1E1E1E),
-            title: Text('Side-by-Side Compare: ${group.groupName}',
-                style: const TextStyle(color: Colors.white, fontSize: 16)),
+            title: Text(
+              'Side-by-Side Compare: ${group.groupName}',
+              style: const TextStyle(color: Colors.white, fontSize: 16),
+            ),
             content: SizedBox(
               width: double.maxFinite,
               height: 360,
@@ -571,39 +580,65 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.black,
                             borderRadius: BorderRadius.circular(6),
                           ),
-                          child: const Icon(Icons.cloud_done,
-                              size: 48, color: Color(0xFF6C5CE7)),
+                          child: const Icon(
+                            Icons.cloud_done,
+                            size: 48,
+                            color: Color(0xFF6C5CE7),
+                          ),
                         ),
                         const SizedBox(height: 8),
-                        Text(file.name,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                            overflow: TextOverflow.ellipsis),
-                        const SizedBox(height: 4),
-                        Text('Similarity: ${file.similarityPercentage}% Match',
-                            style: const TextStyle(
-                                color: Color(0xFF6C5CE7),
-                                fontWeight: FontWeight.bold,
-                                fontSize: 11)),
-                        Text('Size: ${file.formattedSize}',
-                            style: const TextStyle(
-                                color: Colors.grey, fontSize: 11)),
-                        Text('Resolution: ${file.resolution}',
-                            style: const TextStyle(
-                                color: Colors.grey, fontSize: 11)),
-                        Text('Duration: ${file.formattedDuration}',
-                            style: const TextStyle(
-                                color: Colors.grey, fontSize: 11)),
                         Text(
-                            'Date: ${file.dateModified.toString().split(' ').first}',
-                            style: const TextStyle(
-                                color: Colors.grey, fontSize: 11)),
+                          file.name,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          'Similarity: ${file.similarityPercentage}% Match',
+                          style: const TextStyle(
+                            color: Color(0xFF6C5CE7),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 11,
+                          ),
+                        ),
+                        Text(
+                          'Size: ${file.formattedSize}',
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 11,
+                          ),
+                        ),
+                        Text(
+                          'Resolution: ${file.resolution}',
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 11,
+                          ),
+                        ),
+                        Text(
+                          'Duration: ${file.formattedDuration}',
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 11,
+                          ),
+                        ),
+                        Text(
+                          'Date: ${file.dateModified.toString().split(' ').first}',
+                          style: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 11,
+                          ),
+                        ),
                         const Spacer(),
                         CheckboxListTile(
                           contentPadding: EdgeInsets.zero,
-                          title: const Text('Purge from Cloud',
-                              style: TextStyle(fontSize: 11)),
+                          title: const Text(
+                            'Purge from Cloud',
+                            style: TextStyle(fontSize: 11),
+                          ),
                           activeColor: const Color(0xFF6C5CE7),
                           value: file.isSelected,
                           onChanged: (val) {
@@ -612,7 +647,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             });
                             setState(() {});
                           },
-                        )
+                        ),
                       ],
                     ),
                   );
@@ -622,8 +657,10 @@ class _HomeScreenState extends State<HomeScreen> {
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context),
-                child: const Text('Done',
-                    style: TextStyle(color: Color(0xFF6C5CE7))),
+                child: const Text(
+                  'Done',
+                  style: TextStyle(color: Color(0xFF6C5CE7)),
+                ),
               ),
             ],
           );
@@ -648,8 +685,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final filteredGroups = _duplicateGroups.where((group) {
-      return group.files
-          .any((f) => f.similarityPercentage >= _similarityThreshold);
+      return group.files.any(
+        (f) => f.similarityPercentage >= _similarityThreshold,
+      );
     }).toList();
 
     int totalSelected = 0;
@@ -668,7 +706,7 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: const Icon(Icons.cloud_sync),
             tooltip: 'Re-scan Cloud Library',
             onPressed: _scanCloudDuplicates,
-          )
+          ),
         ],
       ),
       body: Column(
@@ -678,21 +716,27 @@ class _HomeScreenState extends State<HomeScreen> {
             color: const Color(0xFF1A1A1A),
             child: Row(
               children: [
-                const Text('Source: ',
-                    style: TextStyle(color: Colors.grey, fontSize: 12)),
+                const Text(
+                  'Source: ',
+                  style: TextStyle(color: Colors.grey, fontSize: 12),
+                ),
                 DropdownButton<String>(
                   value: _selectedSource,
                   dropdownColor: const Color(0xFF2A2A2A),
                   style: const TextStyle(color: Colors.white, fontSize: 12),
                   items: const [
                     DropdownMenuItem(
-                        value: 'Google Photos',
-                        child: Text('Google Photos Cloud')),
+                      value: 'Google Photos',
+                      child: Text('Google Photos Cloud'),
+                    ),
                     DropdownMenuItem(
-                        value: 'Apple Photos',
-                        child: Text('Apple Photos Cloud')),
+                      value: 'Apple Photos',
+                      child: Text('Apple Photos Cloud'),
+                    ),
                     DropdownMenuItem(
-                        value: 'Device Scan', child: Text('Local Device Scan')),
+                      value: 'Device Scan',
+                      child: Text('Local Device Scan'),
+                    ),
                   ],
                   onChanged: (val) {
                     if (val != null) {
@@ -704,11 +748,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
                 const Spacer(),
-                Text('Match: ${_similarityThreshold.round()}%',
-                    style: const TextStyle(
-                        color: Color(0xFF6C5CE7),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12)),
+                Text(
+                  'Match: ${_similarityThreshold.round()}%',
+                  style: const TextStyle(
+                    color: Color(0xFF6C5CE7),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                  ),
+                ),
                 SizedBox(
                   width: 110,
                   child: Slider(
@@ -749,168 +796,181 @@ class _HomeScreenState extends State<HomeScreen> {
           Expanded(
             child: _isLoading
                 ? const Center(
-                    child: CircularProgressIndicator(
-                      color: Color(0xFF6C5CE7),
-                    ),
+                    child: CircularProgressIndicator(color: Color(0xFF6C5CE7)),
                   )
                 : filteredGroups.isEmpty
-                    ? const Center(
-                        child: Text(
-                          'No duplicates found matching cloud criteria!',
-                          style: TextStyle(color: Colors.grey),
+                ? const Center(
+                    child: Text(
+                      'No duplicates found matching cloud criteria!',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount: filteredGroups.length,
+                    itemBuilder: (context, groupIndex) {
+                      final group = filteredGroups[groupIndex];
+                      return Card(
+                        margin: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 6,
                         ),
-                      )
-                    : ListView.builder(
-                        itemCount: filteredGroups.length,
-                        itemBuilder: (context, groupIndex) {
-                          final group = filteredGroups[groupIndex];
-                          return Card(
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 6),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          'Group: ${group.groupName}',
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14,
-                                            color: Colors.white,
-                                          ),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
+                                  Expanded(
+                                    child: Text(
+                                      'Group: ${group.groupName}',
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14,
+                                        color: Colors.white,
                                       ),
-                                      Text(
-                                        'Wasted: ${group.formattedTotalSize}',
-                                        style: const TextStyle(
-                                          color: Colors.redAccent,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ],
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
                                   ),
-                                  const SizedBox(height: 8),
                                   Text(
-                                    'Contains ${group.files.length} duplicate items (${_similarityThreshold.round()}% match filter)',
+                                    'Wasted: ${group.formattedTotalSize}',
                                     style: const TextStyle(
-                                        color: Colors.grey, fontSize: 12),
+                                      color: Colors.redAccent,
+                                      fontSize: 12,
+                                    ),
                                   ),
-                                  const SizedBox(height: 12),
-                                  SizedBox(
-                                    height: 125,
-                                    child: ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: group.files.length,
-                                      itemBuilder: (context, fileIndex) {
-                                        final file = group.files[fileIndex];
-                                        return Container(
-                                          width: 140,
-                                          margin:
-                                              const EdgeInsets.only(right: 8),
-                                          padding: const EdgeInsets.all(6),
-                                          decoration: BoxDecoration(
-                                            color: const Color(0xFF2A2A2A),
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            border: Border.all(
-                                              color: file.isSelected
-                                                  ? const Color(0xFF6C5CE7)
-                                                  : Colors.transparent,
-                                              width: 2,
-                                            ),
-                                          ),
-                                          child: Stack(
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                'Contains ${group.files.length} duplicate items (${_similarityThreshold.round()}% match filter)',
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              SizedBox(
+                                height: 125,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: group.files.length,
+                                  itemBuilder: (context, fileIndex) {
+                                    final file = group.files[fileIndex];
+                                    return Container(
+                                      width: 140,
+                                      margin: const EdgeInsets.only(right: 8),
+                                      padding: const EdgeInsets.all(6),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFF2A2A2A),
+                                        borderRadius: BorderRadius.circular(8),
+                                        border: Border.all(
+                                          color: file.isSelected
+                                              ? const Color(0xFF6C5CE7)
+                                              : Colors.transparent,
+                                          width: 2,
+                                        ),
+                                      ),
+                                      child: Stack(
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Expanded(
-                                                    child: Container(
-                                                      width: double.infinity,
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.black45,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(4),
-                                                      ),
-                                                      child: const Icon(
-                                                          Icons.cloud,
-                                                          color: Colors.grey,
-                                                          size: 28),
-                                                    ),
+                                              Expanded(
+                                                child: Container(
+                                                  width: double.infinity,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.black45,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          4,
+                                                        ),
                                                   ),
-                                                  const SizedBox(height: 4),
-                                                  Text(
-                                                      'Size: ${file.formattedSize}',
-                                                      style: const TextStyle(
-                                                          fontSize: 10,
-                                                          color: Colors.white)),
-                                                  Text(
-                                                      'Res: ${file.resolution}',
-                                                      style: const TextStyle(
-                                                          fontSize: 10,
-                                                          color: Colors.grey)),
-                                                  Text(
-                                                      'Date: ${file.dateModified.toString().split(' ').first}',
-                                                      style: const TextStyle(
-                                                          fontSize: 10,
-                                                          color: Colors.grey)),
-                                                ],
+                                                  child: const Icon(
+                                                    Icons.cloud,
+                                                    color: Colors.grey,
+                                                    size: 28,
+                                                  ),
+                                                ),
                                               ),
-                                              Positioned(
-                                                top: 0,
-                                                right: 0,
-                                                child: Checkbox(
-                                                  value: file.isSelected,
-                                                  activeColor:
-                                                      const Color(0xFF6C5CE7),
-                                                  onChanged: (val) {
-                                                    setState(() {
-                                                      file.isSelected =
-                                                          val ?? false;
-                                                    });
-                                                  },
+                                              const SizedBox(height: 4),
+                                              Text(
+                                                'Size: ${file.formattedSize}',
+                                                style: const TextStyle(
+                                                  fontSize: 10,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                              Text(
+                                                'Res: ${file.resolution}',
+                                                style: const TextStyle(
+                                                  fontSize: 10,
+                                                  color: Colors.grey,
+                                                ),
+                                              ),
+                                              Text(
+                                                'Date: ${file.dateModified.toString().split(' ').first}',
+                                                style: const TextStyle(
+                                                  fontSize: 10,
+                                                  color: Colors.grey,
                                                 ),
                                               ),
                                             ],
                                           ),
-                                        );
-                                      },
+                                          Positioned(
+                                            top: 0,
+                                            right: 0,
+                                            child: Checkbox(
+                                              value: file.isSelected,
+                                              activeColor: const Color(
+                                                0xFF6C5CE7,
+                                              ),
+                                              onChanged: (val) {
+                                                setState(() {
+                                                  file.isSelected =
+                                                      val ?? false;
+                                                });
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: TextButton.icon(
+                                  onPressed: () =>
+                                      _openSideBySideComparison(group),
+                                  icon: const Icon(
+                                    Icons.compare,
+                                    size: 16,
+                                    color: Color(0xFF6C5CE7),
+                                  ),
+                                  label: const Text(
+                                    'Side-by-Side Compare',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Color(0xFF6C5CE7),
                                     ),
                                   ),
-                                  const SizedBox(height: 8),
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: TextButton.icon(
-                                      onPressed: () =>
-                                          _openSideBySideComparison(group),
-                                      icon: const Icon(Icons.compare,
-                                          size: 16, color: Color(0xFF6C5CE7)),
-                                      label: const Text(
-                                        'Side-by-Side Compare',
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            color: Color(0xFF6C5CE7)),
-                                      ),
-                                    ),
-                                  )
-                                ],
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                      ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
           ),
           Container(
             padding: const EdgeInsets.all(16),
@@ -921,11 +981,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 Text(
                   'Selected: $totalSelected files',
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.white),
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
                 ElevatedButton.icon(
-                  onPressed:
-                      totalSelected > 0 ? _deleteSelectedCloudFiles : null,
+                  onPressed: totalSelected > 0
+                      ? _deleteSelectedCloudFiles
+                      : null,
                   icon: const Icon(Icons.delete, color: Colors.white),
                   label: const Text('Delete Selected'),
                   style: ElevatedButton.styleFrom(
